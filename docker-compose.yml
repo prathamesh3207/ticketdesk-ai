@@ -1,0 +1,19 @@
+# Optional: use this if you do NOT have SQL Server / LocalDB installed (or you are on Mac/Linux).
+#   docker compose up -d
+# Then start the API with the Docker connection string:
+#   Windows (cmd):   set ConnectionStrings__Default=Server=localhost,1433;Database=TicketDeskDb;User Id=sa;Password=Your_strong_Passw0rd;TrustServerCertificate=True
+#   Mac/Linux:       export ConnectionStrings__Default="Server=localhost,1433;Database=TicketDeskDb;User Id=sa;Password=Your_strong_Passw0rd;TrustServerCertificate=True"
+# SSMS (Windows) can connect to:  localhost,1433   with SQL Server Authentication (sa / Your_strong_Passw0rd)
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: ticketdesk-sql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Your_strong_Passw0rd"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/opt/mssql
+volumes:
+  sqldata:
